@@ -1,0 +1,1555 @@
+{
+  "datasets": [
+    {
+      "name": "79713818",
+      "displayName": "dim_date",
+      "queryLines": [
+        "select * from regis_healthcare.gold.dim_date;"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "5a1e38d5",
+      "displayName": "dim_facilities",
+      "config": {
+        "version": "1.1",
+        "source": "regis_healthcare.gold.dim_facilities",
+        "dimensions": [
+          {
+            "name": "facility_key",
+            "expr": "source.facility_key",
+            "displayName": "Facility Key"
+          },
+          {
+            "name": "facility_id",
+            "expr": "source.facility_id",
+            "displayName": "Facility Id"
+          },
+          {
+            "name": "facility_name",
+            "expr": "source.facility_name",
+            "displayName": "Facility Name"
+          },
+          {
+            "name": "address",
+            "expr": "source.address",
+            "displayName": "Address"
+          },
+          {
+            "name": "suburb",
+            "expr": "source.suburb",
+            "displayName": "Suburb"
+          },
+          {
+            "name": "state",
+            "expr": "source.state",
+            "displayName": "State"
+          },
+          {
+            "name": "postcode",
+            "expr": "source.postcode",
+            "displayName": "Postcode"
+          },
+          {
+            "name": "phone",
+            "expr": "source.phone",
+            "displayName": "Phone"
+          },
+          {
+            "name": "email",
+            "expr": "source.email",
+            "displayName": "Email"
+          },
+          {
+            "name": "capacity",
+            "expr": "source.capacity",
+            "displayName": "Capacity"
+          },
+          {
+            "name": "accreditation_status",
+            "expr": "source.accreditation_status",
+            "displayName": "Accreditation Status"
+          },
+          {
+            "name": "created_at",
+            "expr": "source.created_at",
+            "displayName": "Created At"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "b9888b16",
+      "displayName": "fact_admissions",
+      "config": {
+        "version": "1.1",
+        "source": "regis_healthcare.gold.fact_admissions",
+        "dimensions": [
+          {
+            "name": "admission_key",
+            "expr": "source.admission_key",
+            "displayName": "Admission Key"
+          },
+          {
+            "name": "resident_key",
+            "expr": "source.resident_key",
+            "displayName": "Resident Key"
+          },
+          {
+            "name": "facility_key",
+            "expr": "source.facility_key",
+            "displayName": "Facility Key"
+          },
+          {
+            "name": "admission_date_key",
+            "expr": "source.admission_date_key",
+            "displayName": "Admission Date Key"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "63ed0240",
+      "displayName": "dim_resident",
+      "config": {
+        "version": "1.1",
+        "source": "regis_healthcare.gold.dim_resident",
+        "dimensions": [
+          {
+            "name": "resident_key",
+            "expr": "source.resident_key",
+            "displayName": "Resident Key"
+          },
+          {
+            "name": "resident_id",
+            "expr": "source.resident_id",
+            "displayName": "Resident Id"
+          },
+          {
+            "name": "first_name",
+            "expr": "source.first_name",
+            "displayName": "First Name"
+          },
+          {
+            "name": "last_name",
+            "expr": "source.last_name",
+            "displayName": "Last Name"
+          },
+          {
+            "name": "date_of_birth",
+            "expr": "source.date_of_birth",
+            "displayName": "Date Of Birth"
+          },
+          {
+            "name": "gender",
+            "expr": "source.gender",
+            "displayName": "Gender"
+          },
+          {
+            "name": "address",
+            "expr": "source.address",
+            "displayName": "Address"
+          },
+          {
+            "name": "suburb",
+            "expr": "source.suburb",
+            "displayName": "Suburb"
+          },
+          {
+            "name": "state",
+            "expr": "source.state",
+            "displayName": "State"
+          },
+          {
+            "name": "postcode",
+            "expr": "source.postcode",
+            "displayName": "Postcode"
+          },
+          {
+            "name": "phone",
+            "expr": "source.phone",
+            "displayName": "Phone"
+          },
+          {
+            "name": "email",
+            "expr": "source.email",
+            "displayName": "Email"
+          },
+          {
+            "name": "care_level",
+            "expr": "source.care_level",
+            "displayName": "Care Level"
+          },
+          {
+            "name": "medicare_number",
+            "expr": "source.medicare_number",
+            "displayName": "Medicare Number"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "f04c2e1b",
+      "displayName": "Admissions by Month",
+      "queryLines": [
+        "SELECT\r\n",
+        "d.month_name,\r\n",
+        "d.year,\r\n",
+        "COUNT(*) AS admissions\r\n",
+        "FROM fact_admissions f\r\n",
+        "JOIN dim_date d\r\n",
+        "ON f.admission_date_key=d.date_key\r\n",
+        "GROUP BY d.year,d.month_name;"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "b76c2858",
+      "displayName": "Discharges by Month",
+      "queryLines": [
+        "SELECT\r\n",
+        "d.month_name,\r\n",
+        "d.year,\r\n",
+        "COUNT(*) AS discharges\r\n",
+        "FROM fact_discharges f\r\n",
+        "JOIN dim_date d\r\n",
+        "ON f.discharge_date_key=d.date_key\r\n",
+        "GROUP BY d.year,d.month_name;"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "ee51a0e6",
+      "displayName": "Occupancy Rate by Facility",
+      "queryLines": [
+        "SELECT\r\n",
+        "  f.facility_key,\r\n",
+        "  f.facility_name,\r\n",
+        "  f.capacity,\r\n",
+        "  COUNT(DISTINCT a.admission_key) AS total_admissions,\r\n",
+        "  COUNT(DISTINCT d.discharge_key) AS total_discharges,\r\n",
+        "  (COUNT(DISTINCT a.admission_key) - COUNT(DISTINCT d.discharge_key)) AS current_residents,\r\n",
+        "  ROUND(\r\n",
+        "    ((COUNT(DISTINCT a.admission_key) - COUNT(DISTINCT d.discharge_key)) * 100.0) / f.capacity,\r\n",
+        "    2\r\n",
+        "  ) AS occupancy_rate\r\n",
+        "FROM\r\n",
+        "  regis_healthcare.gold.dim_facilities f\r\n",
+        "    LEFT JOIN regis_healthcare.gold.fact_admissions a\r\n",
+        "      ON f.facility_key = a.facility_key\r\n",
+        "    LEFT JOIN regis_healthcare.gold.fact_discharges d\r\n",
+        "      ON f.facility_key = d.facility_key\r\n",
+        "GROUP BY\r\n",
+        "  f.facility_key,\r\n",
+        "  f.facility_name,\r\n",
+        "  f.capacity;"
+      ]
+    },
+    {
+      "name": "f0d1a749",
+      "displayName": "Incident Count by Severity",
+      "queryLines": [
+        "select d.severity,\r\n",
+        "       count(\"*\") as Incident_Count\r\n",
+        "         from regis_healthcare.gold.fact_incidents f \r\n",
+        "         left join regis_healthcare.gold.dim_incident_type d \r\n",
+        "on f.incident_type_key = d.incident_type_key \r\n",
+        "group by severity order by Incident_Count ;"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "d8ae1f2c",
+      "displayName": "Facility-wise Incident Count",
+      "queryLines": [
+        "select d.facility_name,\r\n",
+        "  count(*) as  incident_count \r\n",
+        "  from fact_incidents f join dim_facilities d \r\n",
+        "  on f.facility_key = d.facility_key  \r\n",
+        "  join dim_incident_type i\r\n",
+        "  on f.incident_type_key = i.incident_type_key \r\n",
+        "group by d.facility_name\r\n",
+        "       ORDER BY\r\n",
+        "    incident_count DESC;"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "f33b47d9",
+      "displayName": "Incident Count Monthly Trend",
+      "queryLines": [
+        "select \r\n",
+        "   d.year,\r\n",
+        "   d.month_name,\r\n",
+        "   j.severity,\r\n",
+        "   count(*) as incident_count\r\n",
+        "   FROM fact_incidents i\r\n",
+        "JOIN dim_date  d\r\n",
+        "ON i.incident_date_key = d.date_key\r\n",
+        "join dim_incident_type j\r\n",
+        "on j.incident_type_key = i.incident_type_key\r\n",
+        "GROUP BY\r\n",
+        "    d.year,\r\n",
+        "    d.month_name,\r\n",
+        "    j.severity\r\n",
+        "\r\n",
+        "ORDER BY\r\n",
+        "    d.year,\r\n",
+        "    d.month_name,\r\n",
+        "    j.severity;\r\n"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    },
+    {
+      "name": "d0e98c73",
+      "displayName": "Critical Incidents Only",
+      "queryLines": [
+        "SELECT\r\n",
+        "   t.severity,\r\n",
+        "    COUNT(*) AS critical_incidents\r\n",
+        "FROM fact_incidents i\r\n",
+        "join dim_incident_type  t\r\n",
+        "on t.incident_type_key = i.incident_type_key\r\n",
+        "group by t.severity having severity='Critical';"
+      ],
+      "catalog": "regis_healthcare",
+      "schema": "gold"
+    }
+  ],
+  "pages": [
+    {
+      "name": "c07b4d08",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-residents",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5a1e38d5",
+                  "fields": [
+                    {
+                      "name": "count(facility_key)",
+                      "expression": "COUNT(`facility_key`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Residents : "
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(facility_key)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "admissions-by-month",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f04c2e1b",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "admissions",
+                      "expression": "`admissions`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Admissions by Month :"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "admissions",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "discharges-by-month",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b76c2858",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "discharges",
+                      "expression": "`discharges`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Discharges by Month :"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "discharges",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 1,
+            "width": 6,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "occupancy-rate-facility",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ee51a0e6",
+                  "fields": [
+                    {
+                      "name": "facility_name",
+                      "expression": "`facility_name`"
+                    },
+                    {
+                      "name": "occupancy_rate",
+                      "expression": "`occupancy_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Occupancy Rate by Facility :"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "facility_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "occupancy_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "current-residents",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ee51a0e6",
+                  "fields": [
+                    {
+                      "name": "facility_name",
+                      "expression": "`facility_name`"
+                    },
+                    {
+                      "name": "current_residents",
+                      "expression": "`current_residents`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Occupancy Current Residents by Facility:"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "facility_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "current_residents",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "incident-count-by-severity",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f0d1a749",
+                  "fields": [
+                    {
+                      "name": "severity",
+                      "expression": "`severity`"
+                    },
+                    {
+                      "name": "Incident_Count",
+                      "expression": "`Incident_Count`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Incident Count by Severity"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "color": {
+                  "fieldName": "severity",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "extra": [
+                  {
+                    "fieldName": "Incident_Count"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 17,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "facility-wise-incident-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d8ae1f2c",
+                  "fields": [
+                    {
+                      "name": "facility_name",
+                      "expression": "`facility_name`"
+                    },
+                    {
+                      "name": "sum(incident_count)",
+                      "expression": "SUM(`incident_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Facility-wise Incident Count :"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "facility_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(incident_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 22,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "incident-count-monthly-trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f33b47d9",
+                  "fields": [
+                    {
+                      "name": "severity",
+                      "expression": "`severity`"
+                    },
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "incident_count",
+                      "expression": "`incident_count`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Incident Count Monthly Trend :",
+                "showDescription": false
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "severity"
+                  },
+                  {
+                    "fieldName": "month_name"
+                  },
+                  {
+                    "fieldName": "year"
+                  },
+                  {
+                    "fieldName": "incident_count"
+                  }
+                ],
+                "rowOrder": [
+                  {
+                    "by": "column",
+                    "field": {
+                      "index": 0
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 28,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "critical-incidents-only",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d0e98c73",
+                  "fields": [
+                    {
+                      "name": "severity",
+                      "expression": "`severity`"
+                    },
+                    {
+                      "name": "sum(critical_incidents)",
+                      "expression": "SUM(`critical_incidents`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Critical Incidents Only :"
+              },
+              "widgetType": "area",
+              "encodings": {
+                "x": {
+                  "fieldName": "severity",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(critical_incidents)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 32,
+            "width": 7,
+            "height": 3
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "fb35d1ad",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "year",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_year",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Year :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "year",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_year"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "month",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_month",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "month_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Month :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "month",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_month"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "day",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_day",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "day",
+                      "expression": "`day`"
+                    },
+                    {
+                      "name": "day_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Day :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "day",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_day"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "day-name",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_day_name",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "day_name",
+                      "expression": "`day_name`"
+                    },
+                    {
+                      "name": "day_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Day Name :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "day_name",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_day_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "month-name",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_month_name",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "month_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Month Name :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "month_name",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_month_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "quarter",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_quarter",
+                "query": {
+                  "datasetName": "79713818",
+                  "fields": [
+                    {
+                      "name": "quarter",
+                      "expression": "`quarter`"
+                    },
+                    {
+                      "name": "quarter_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Quarter :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "quarter",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f174b2f0ad1ecd9698e6bd060e2d40_quarter"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "facility-name",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_facility_name",
+                "query": {
+                  "datasetName": "5a1e38d5",
+                  "fields": [
+                    {
+                      "name": "facility_name",
+                      "expression": "`facility_name`"
+                    },
+                    {
+                      "name": "facility_name_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Facility Name :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "facility_name",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_facility_name"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "state",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_state",
+                "query": {
+                  "datasetName": "5a1e38d5",
+                  "fields": [
+                    {
+                      "name": "state",
+                      "expression": "`state`"
+                    },
+                    {
+                      "name": "state_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "State :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "state",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_state"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "suburb",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_suburb",
+                "query": {
+                  "datasetName": "5a1e38d5",
+                  "fields": [
+                    {
+                      "name": "suburb",
+                      "expression": "`suburb`"
+                    },
+                    {
+                      "name": "suburb_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Suburb :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "suburb",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f1753ff9d6144589dc2632e0872da4_suburb"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 16,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "care-level",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f175419d5d1dd38653a5aec6b45360_care_level",
+                "query": {
+                  "datasetName": "63ed0240",
+                  "fields": [
+                    {
+                      "name": "care_level",
+                      "expression": "`care_level`"
+                    },
+                    {
+                      "name": "care_level_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Care Level :"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "care_level",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f175419d5d1dd38653a5aec6b45360_care_level"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "gender",
+            "queries": [
+              {
+                "name": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f175419d5d1dd38653a5aec6b45360_gender",
+                "query": {
+                  "datasetName": "63ed0240",
+                  "fields": [
+                    {
+                      "name": "gender",
+                      "expression": "`gender`"
+                    },
+                    {
+                      "name": "gender_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Gender : "
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "gender",
+                    "queryName": "dashboards/01f174b1468a1bbaa261aa3dc99467fd/datasets/01f175419d5d1dd38653a5aec6b45360_gender"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
